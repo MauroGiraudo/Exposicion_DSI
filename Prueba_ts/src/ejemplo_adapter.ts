@@ -14,14 +14,14 @@ class Joystick implements IDevice{
   }
 }
 
-interface IDeviceAdapter {
+interface IGameController {
   kick(): void
   punch(): void
   defend(): void
   special(): void
 }
 
-class TecladoAdapter implements IDeviceAdapter {
+class TecladoAdapter implements IGameController {
   private teclado: Teclado
 
   constructor(teclado: Teclado) {
@@ -45,7 +45,7 @@ class TecladoAdapter implements IDeviceAdapter {
   }
 }
 
-class JoystickAdapter implements IDeviceAdapter {
+class JoystickAdapter implements IGameController {
   private joystick: Joystick
 
   constructor(joystick: Joystick) {
@@ -69,26 +69,49 @@ class JoystickAdapter implements IDeviceAdapter {
   }
 }
 
-class Factory {
-  private static instance: Factory
-
-  static getInstance(): Factory {
-    if(!Factory.instance){
-      Factory.instance = new Factory()
-    }
-    return Factory.instance
-  }
-// No sé si es correcto crear un "create" por cada clase que hereda de "IDeviceAdapter"
-  createTecladoAdapter(): IDeviceAdapter {
+class FactoryController {
+// No sé si es correcto crear un "create" por cada clase que hereda de "IGameController"
+  createTecladoAdapter(): IGameController {
     return new TecladoAdapter(new Teclado())
   }
 
-  createJoystickAdapter(): IDeviceAdapter {
+  createJoystickAdapter(): IGameController {
     return new JoystickAdapter(new Joystick())
   }
 
-// O directamente crear un "create" para todas las clases que heredan de "IDeviceAdapter"
-  createDeviceAdapter(tipo?: string): IDeviceAdapter {
+// O directamente crear un "create" para todas las clases que heredan de "IGameController"
+  createGameController(tipo?: string): IGameController {
+    switch(tipo) {
+      case 'teclado':
+        return new TecladoAdapter(new Teclado())
+      case 'joystick':
+        return new JoystickAdapter(new Joystick())
+      default:
+        throw new Error('Tipo de controlador no válido')
+    }
+  }
+}
+
+class FactoryControllerSingleton {
+  private static instance: FactoryControllerSingleton
+
+  static getInstance(): FactoryControllerSingleton {
+    if(!FactoryControllerSingleton.instance){
+      FactoryControllerSingleton.instance = new FactoryControllerSingleton()
+    }
+    return FactoryControllerSingleton.instance
+  }
+// No sé si es correcto crear un "create" por cada clase que hereda de "IGameController"
+  createTecladoAdapter(): IGameController {
+    return new TecladoAdapter(new Teclado())
+  }
+
+  createJoystickAdapter(): IGameController {
+    return new JoystickAdapter(new Joystick())
+  }
+
+// O directamente crear un "create" para todas las clases que heredan de "IGameController"
+  createGameController(tipo?: string): IGameController {
     switch(tipo) {
       case 'teclado':
         return new TecladoAdapter(new Teclado())
@@ -101,9 +124,9 @@ class Factory {
 }
 
 class Game {
-  private controller: IDeviceAdapter
+  private controller: IGameController
 
-  constructor(controller: IDeviceAdapter){
+  constructor(controller: IGameController){
     this.controller = controller
   }
 
@@ -115,4 +138,4 @@ class Game {
   }
 }
 
-export { Teclado, Joystick, IDeviceAdapter, TecladoAdapter, JoystickAdapter, Factory, Game }  
+export { Teclado, Joystick, IGameController, TecladoAdapter, JoystickAdapter, FactoryControllerSingleton, Game }  

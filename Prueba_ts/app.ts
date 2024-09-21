@@ -1,8 +1,8 @@
-import { Factory, Game } from './src/ejemplo_adapter.js'
+import { FactoryControllerSingleton, Game } from './src/ejemplo_adapter.js'
 
 console.log('\nPrimero probaremos el teclado')
 
-const jugarConTeclado = Factory.getInstance().createTecladoAdapter()
+const jugarConTeclado = FactoryControllerSingleton.getInstance().createTecladoAdapter()
 
 const primerJuego = new Game(jugarConTeclado)
 
@@ -12,7 +12,7 @@ primerJuego.play()
 
 console.log('\nAhora sigue el joystick...')
 
-const jugarConJoystick = Factory.getInstance().createJoystickAdapter()
+const jugarConJoystick = FactoryControllerSingleton.getInstance().createJoystickAdapter()
 
 const segundoJuego = new Game(jugarConJoystick)
 
@@ -24,7 +24,7 @@ console.log(`\nTeclado`)
 
 let tipo = 'teclado'
 
-let controlador = Factory.getInstance().createDeviceAdapter(tipo)
+let controlador = FactoryControllerSingleton.getInstance().createGameController(tipo)
 
 new Game(controlador).play()
 
@@ -34,7 +34,7 @@ console.log(`\nJoystick`)
 
 tipo = 'joystick'
 
-controlador = Factory.getInstance().createDeviceAdapter(tipo)
+controlador = FactoryControllerSingleton.getInstance().createGameController(tipo)
 
 new Game(controlador).play()
 
