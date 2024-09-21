@@ -1,5 +1,6 @@
 import { FactoryControllerSingleton, Game } from './src/ejemplo_adapter.js'
 
+/*
 console.log('\nPrimero probaremos el teclado')
 
 const jugarConTeclado = FactoryControllerSingleton.getInstance().createTecladoAdapter()
@@ -17,8 +18,13 @@ const jugarConJoystick = FactoryControllerSingleton.getInstance().createJoystick
 const segundoJuego = new Game(jugarConJoystick)
 
 segundoJuego.play()
+*/
 
 //-----------------------------------------------------------------------------
+
+const arreglo: string[] = ['A', 'B', 'X', 'Y']
+
+console.log(typeof arreglo)
 
 console.log(`\nTeclado`)
 
