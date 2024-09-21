@@ -1,39 +1,72 @@
-import { FactoryControllerSingleton, Game } from './src/ejemplo_adapter.js'
+import { TecladoAdapter, JoystickAdapter, Teclado, Joystick, Game } from './src/1_Adaptador.js'
+import { FactoryController } from './src/2_Factory.js'
+import { FactoryControllerSingleton } from './src/3_Singleton.js'
+import { GameSingleton } from './src/4_Estrategia.js'
+import { ControllerAdapterComposite, FactoryControllerComposite } from './src/5_Composite.js'
 
+// 1- [Patrón Adaptador]
 /*
-console.log('\nPrimero probaremos el teclado')
+console.log('Teclado')
 
-const jugarConTeclado = FactoryControllerSingleton.getInstance().createTecladoAdapter()
+const teclado = new Teclado()
 
-const primerJuego = new Game(jugarConTeclado)
+const tecladoAdapter = new TecladoAdapter(teclado)
 
-primerJuego.play()
+const game1 = new Game(tecladoAdapter)
+
+game1.play()
 
 
 
-console.log('\nAhora sigue el joystick...')
+console.log('Joystick')
 
-const jugarConJoystick = FactoryControllerSingleton.getInstance().createJoystickAdapter()
+const joystick = new Joystick()
 
-const segundoJuego = new Game(jugarConJoystick)
+const joystickAdapter = new JoystickAdapter(joystick)
 
-segundoJuego.play()
+const game2 = new Game(joystickAdapter)
+
+game2.play()
+*/
+
+// ----------------------------------------------------------------------------
+
+// 2- [Patrón Factoría]
+/*
+console.log('\nTeclado')
+
+const factory = new FactoryController()
+
+let tipo = 'teclado'
+
+const tecladoController = factory.createGameController(tipo)
+
+new Game(tecladoController).play()
+
+
+
+console.log('\nJoystick')
+
+tipo = 'joystick'
+
+const joystickController = factory.createGameController(tipo)
+
+new Game(joystickController).play()
 */
 
 //-----------------------------------------------------------------------------
 
-const arreglo: string[] = ['A', 'B', 'X', 'Y']
-
-console.log(typeof arreglo)
-
+// 3- [Patrón Singleton]
+/*
 console.log(`\nTeclado`)
 
 let tipo = 'teclado'
 
 let controlador = FactoryControllerSingleton.getInstance().createGameController(tipo)
 
-new Game(controlador).play()
+let game1 = new Game(controlador).play()
 
+game1.play()
 
 
 console.log(`\nJoystick`)
@@ -42,7 +75,75 @@ tipo = 'joystick'
 
 controlador = FactoryControllerSingleton.getInstance().createGameController(tipo)
 
-new Game(controlador).play()
+let game2 = new Game(controlador)
+
+game2.play()
+*/
+
+// ----------------------------------------------------------------------------
+
+// 4- [Patrón Estrategia]
+/* 
+console.log(`\nTeclado`)
+
+let tipo = 'teclado'
+
+let controlador = FactoryControllerSingleton.getInstance().createGameController(tipo)
+
+let game = GameSingleton.createGame(controlador)
+
+game.play()
+
+
+
+console.log(`\nJoystick`)
+
+tipo = 'joystick'
+
+let newController = FactoryControllerSingleton.getInstance().createGameController(tipo)
+
+game.setController(newController)
+
+game.play() 
+*/
+
+// ----------------------------------------------------------------------------
+
+// 5- [Patrón Composite]
+
+console.log(`\nTeclado`)
+
+let tipo = 'teclado'
+
+let controlador = FactoryControllerSingleton.getInstance().createGameController(tipo)
+
+let game = GameSingleton.createGame(controlador)
+
+game.play()
+
+
+
+console.log(`\nJoystick`)
+
+tipo = 'joystick'
+
+let newController = FactoryControllerSingleton.getInstance().createGameController(tipo)
+
+game.setController(newController)
+
+game.play() 
+
+
+
+console.log('\nTeclado y Joystick')
+
+tipo = 'teclado y joystick'
+
+newController = FactoryControllerComposite.getInstance().createGameController(tipo)
+
+game.setController(newController)
+
+game.play()
 
 
 

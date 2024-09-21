@@ -1,27 +1,26 @@
-import { IDeviceAdapter, Teclado, Joystick, TecladoAdapter, JoystickAdapter } from './1_Adaptador';
+import { IGameController, Teclado, Joystick, TecladoAdapter, JoystickAdapter } from './1_Adaptador.js';
 
 // Ahora ControllerFactory es un Singleton
-class ControllerFactory {
-    private static instance: ControllerFactory;
+export class FactoryControllerSingleton {
+  private static instance: FactoryControllerSingleton
 
-    private constructor() {}
+  private constructor() {}
 
-    static getInstance(): ControllerFactory {
-        if (!this.instance) {
-            this.instance = new ControllerFactory();
-        }
-        return this.instance;
+  static getInstance(): FactoryControllerSingleton {
+    if(!FactoryControllerSingleton.instance){
+      FactoryControllerSingleton.instance = new FactoryControllerSingleton()
     }
+    return FactoryControllerSingleton.instance
+  }
 
-    createController(): IDeviceAdapter { }
-}
-export class TecladoFactory extends ControllerFactory {
-    createController(): IDeviceAdapter {
-        return new TecladoAdapter(new Teclado());
+  createGameController(tipo: string): IGameController {
+    switch(tipo) {
+      case 'teclado':
+        return new TecladoAdapter(new Teclado())
+      case 'joystick':
+        return new JoystickAdapter(new Joystick())
+      default:
+        throw new Error('Tipo de controlador no válido')
     }
-}
-export class JoystickFactory extends ControllerFactory {
-    createController(): IDeviceAdapter {
-        return new JoystickAdapter(new Joystick());
-    }
+  }
 }

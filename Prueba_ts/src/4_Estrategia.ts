@@ -1,18 +1,20 @@
-import {IDeviceAdapter} from './1_Adaptador';
-import {TecladoControllerFactory, JoystickControllerFactory} from './2_Factory';
-export class Game{
-    private controller:IDeviceAdapter;
-    private static game: Game;
-    private constructor(controller:IDeviceAdapter){
+import {IGameController} from './ejemplo_adapter.js'
+
+
+// Para implementar el patrón Estrategia, incorporamos el método setController(controller), que cambia el controlador del juego.
+export class GameSingleton{
+    private controller: IGameController;
+    private static instance: GameSingleton;
+    private constructor(controller:IGameController){
         this.controller = controller;
     }
-    static createGame(controller): Game {
-        if (!this.game) {
-            this.game = new Game(controller);
+    static createGame(controller: IGameController): GameSingleton {
+        if (!this.instance) {
+            this.instance = new GameSingleton(controller);
         }
-        return this.game;
+        return this.instance;
     }
-    setController(controller: IDeviceAdapter){
+    setController(controller: IGameController){
         this.controller = controller;
     }
     play(){

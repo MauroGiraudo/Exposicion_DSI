@@ -78,7 +78,7 @@ class JoystickAdapter implements IGameController {
 }
 
 class FactoryController {
-  createGameController(tipo?: string): IGameController {
+  createGameController(tipo: string): IGameController {
     switch(tipo) {
       case 'teclado':
         return new TecladoAdapter(new Teclado())

@@ -1,27 +1,27 @@
-interface IDevice {
+export interface IDevice {
     press(input: string): void
   }
   
-  class Teclado implements IDevice{
+  export class Teclado implements IDevice{
     press(tecla: string) {
       console.log(`Tecla ${tecla} presionada`)
     }
   }
   
-  class Joystick implements IDevice{
+  export class Joystick implements IDevice{
     press(boton: string) {
       console.log(`Botón ${boton} presionado`)
     }
   }
   
-  interface IDeviceAdapter {
+  export interface IGameController {
     kick(): void
     punch(): void
     defend(): void
     special(): void
   }
   
-  class TecladoAdapter implements IDeviceAdapter {
+  export class TecladoAdapter implements IGameController {
     private teclado: Teclado
   
     constructor(teclado: Teclado) {
@@ -45,7 +45,7 @@ interface IDevice {
     }
   }
   
-  class JoystickAdapter implements IDeviceAdapter {
+  export class JoystickAdapter implements IGameController {
     private joystick: Joystick
   
     constructor(joystick: Joystick) {
@@ -68,3 +68,18 @@ interface IDevice {
       this.joystick.press('Y')
     }
   }
+
+export class Game {
+  private controller: IGameController
+
+  constructor(controller: IGameController){
+    this.controller = controller
+  }
+
+  play() {
+    this.controller.kick()
+    this.controller.punch()
+    this.controller.defend()
+    this.controller.special()
+  }
+}
