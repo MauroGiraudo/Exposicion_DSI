@@ -1,23 +1,27 @@
-class Teclado {
-  pressTecla(tecla: string) {
+interface IDevice {
+  press(input: string): void
+}
+
+class Teclado implements IDevice{
+  press(tecla: string) {
     console.log(`Tecla ${tecla} presionada`)
   }
 }
 
-class Joystick {
-  pressBoton(boton: string) {
+class Joystick implements IDevice{
+  press(boton: string) {
     console.log(`Botón ${boton} presionado`)
   }
 }
 
-interface GameController {
+interface IDeviceAdapter {
   kick(): void
   punch(): void
   defend(): void
   special(): void
 }
 
-class TecladoAdapter implements GameController {
+class TecladoAdapter implements IDeviceAdapter {
   private teclado: Teclado
 
   constructor(teclado: Teclado) {
@@ -25,23 +29,23 @@ class TecladoAdapter implements GameController {
   }
 
   kick() {
-    this.teclado.pressTecla('U')
+    this.teclado.press('U')
   }
 
   punch() {
-    this.teclado.pressTecla('I')
+    this.teclado.press('I')
   }
 
   defend() {
-    this.teclado.pressTecla('J')
+    this.teclado.press('J')
   }
 
   special() {
-    this.teclado.pressTecla('K')
+    this.teclado.press('K')
   }
 }
 
-class JoystickAdapter implements GameController {
+class JoystickAdapter implements IDeviceAdapter {
   private joystick: Joystick
 
   constructor(joystick: Joystick) {
@@ -49,19 +53,19 @@ class JoystickAdapter implements GameController {
   }
 
   kick() {
-    this.joystick.pressBoton('A')
+    this.joystick.press('A')
   }
 
   punch() {
-    this.joystick.pressBoton('B')
+    this.joystick.press('B')
   }
 
   defend() {
-    this.joystick.pressBoton('X')
+    this.joystick.press('X')
   }
 
   special() {
-    this.joystick.pressBoton('Y')
+    this.joystick.press('Y')
   }
 }
 
@@ -74,17 +78,17 @@ class Factory {
     }
     return Factory.instance
   }
-// No sé si es correcto crear un "create" por cada clase que hereda de "GameController"
-  createTecladoAdapter(): GameController {
+// No sé si es correcto crear un "create" por cada clase que hereda de "IDeviceAdapter"
+  createTecladoAdapter(): IDeviceAdapter {
     return new TecladoAdapter(new Teclado())
   }
 
-  createJoystickAdapter(): GameController {
+  createJoystickAdapter(): IDeviceAdapter {
     return new JoystickAdapter(new Joystick())
   }
 
-// O directamente crear un "create" para todas las clases que heredan de "GameController"
-  createGameController(tipo?: string): GameController {
+// O directamente crear un "create" para todas las clases que heredan de "IDeviceAdapter"
+  createDeviceAdapter(tipo?: string): IDeviceAdapter {
     switch(tipo) {
       case 'teclado':
         return new TecladoAdapter(new Teclado())
@@ -97,9 +101,9 @@ class Factory {
 }
 
 class Game {
-  private controller: GameController
+  private controller: IDeviceAdapter
 
-  constructor(controller: GameController){
+  constructor(controller: IDeviceAdapter){
     this.controller = controller
   }
 
@@ -111,4 +115,4 @@ class Game {
   }
 }
 
-export { Teclado, Joystick, GameController, TecladoAdapter, JoystickAdapter, Factory, Game }  
+export { Teclado, Joystick, IDeviceAdapter, TecladoAdapter, JoystickAdapter, Factory, Game }  

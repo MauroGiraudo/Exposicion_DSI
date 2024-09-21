@@ -24,7 +24,7 @@ console.log(`\nTeclado`)
 
 let tipo = 'teclado'
 
-let controlador = Factory.getInstance().createGameController(tipo)
+let controlador = Factory.getInstance().createDeviceAdapter(tipo)
 
 new Game(controlador).play()
 
@@ -34,7 +34,7 @@ console.log(`\nJoystick`)
 
 tipo = 'joystick'
 
-controlador = Factory.getInstance().createGameController(tipo)
+controlador = Factory.getInstance().createDeviceAdapter(tipo)
 
 new Game(controlador).play()
 
