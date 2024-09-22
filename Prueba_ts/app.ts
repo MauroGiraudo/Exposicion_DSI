@@ -1,5 +1,6 @@
 import { TecladoAdapter, JoystickAdapter, Teclado, Joystick, Game } from './src/1_Adaptador.js'
-import { FactoryController } from './src/2_Factory.js'
+//import { FactoryController } from './src/2_Factory.js'
+import { FactoryTecladoController, FactoryJoystickController } from './src/2_Factory.js'
 import { FactoryControllerSingleton } from './src/3_Singleton.js'
 import { GameSingleton } from './src/4_Estrategia.js'
 import { ControllerAdapterComposite, FactoryControllerComposite } from './src/5_Composite.js'
@@ -34,21 +35,22 @@ game2.play()
 /*
 console.log('\nTeclado')
 
-const factory = new FactoryController()
+//let tipo = 'teclado'
+//const factory = new ControllerFactory()
+//const tecladoController = factory.createGameController(tipo)
 
-let tipo = 'teclado'
-
-const tecladoController = factory.createGameController(tipo)
-
+const tecladoFactory = new FactoryTecladoController()
+const tecladoController = tecladoFactory.createGameController()
 new Game(tecladoController).play()
-
-
 
 console.log('\nJoystick')
 
-tipo = 'joystick'
+//tipo = 'joystick'
+//const joystickController = factory.createGameController(tipo)
 
-const joystickController = factory.createGameController(tipo)
+const josystickFactory = new FactoryJoystickController()
+const joystickController = joystickFactory.createGameController()
+
 
 new Game(joystickController).play()
 */
