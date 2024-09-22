@@ -1,5 +1,5 @@
 import { IDevice, TecladoAdapter, JoystickAdapter, Teclado, Joystick } from "./1_Adaptador.js"
-import { IGameController } from "./ejemplo_adapter.js"
+import { IGameController } from "./1_Adaptador.js"
 
 /* interface IDeviceComposite {
   press(input: string | string[]): void

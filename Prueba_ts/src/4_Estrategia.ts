@@ -1,4 +1,4 @@
-import {IGameController} from './ejemplo_adapter.js'
+import {IGameController} from './1_Adaptador.js'
 
 
 // Para implementar el patrón Estrategia, incorporamos el método setController(controller), que cambia el controlador del juego.

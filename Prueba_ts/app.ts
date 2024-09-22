@@ -5,7 +5,7 @@ import { GameSingleton } from './src/4_Estrategia.js'
 import { ControllerAdapterComposite, FactoryControllerComposite } from './src/5_Composite.js'
 
 // 1- [Patrón Adaptador]
-/*
+
 console.log('Teclado')
 
 const teclado = new Teclado()
@@ -27,7 +27,6 @@ const joystickAdapter = new JoystickAdapter(joystick)
 const game2 = new Game(joystickAdapter)
 
 game2.play()
-*/
 
 // ----------------------------------------------------------------------------
 
@@ -110,7 +109,7 @@ game.play()
 // ----------------------------------------------------------------------------
 
 // 5- [Patrón Composite]
-
+/*
 console.log(`\nTeclado`)
 
 let tipo = 'teclado'
@@ -144,7 +143,7 @@ newController = FactoryControllerComposite.getInstance().createGameController(ti
 game.setController(newController)
 
 game.play()
-
+*/
 
 
 
