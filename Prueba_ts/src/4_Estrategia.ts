@@ -11,6 +11,8 @@ export class GameSingleton{
     static createGame(controller: IGameController): GameSingleton {
         if (!this.instance) {
             this.instance = new GameSingleton(controller);
+        }else{
+            this.instance.controller = controller;
         }
         return this.instance;
     }
