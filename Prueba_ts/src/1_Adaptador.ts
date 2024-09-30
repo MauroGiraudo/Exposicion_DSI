@@ -76,6 +76,8 @@ export class Game {
     this.controller = controller
   }
 
+  
+
   play() {
     this.controller.kick()
     this.controller.punch()
