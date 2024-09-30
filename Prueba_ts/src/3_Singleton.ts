@@ -1,4 +1,4 @@
-import { IGameController, Teclado, Joystick, TecladoAdapter, JoystickAdapter } from './1_Adaptador.js';
+import { IGameController, Teclado, Joystick, TecladoAdapter, JoystickAdapter, IAdapter } from './1_Adaptador.js';
 
 // Ahora ControllerFactory es un Singleton
 export class FactoryControllerSingleton {
@@ -13,7 +13,7 @@ export class FactoryControllerSingleton {
     return FactoryControllerSingleton.instance
   }
 
-  createGameController(tipo: string): IGameController {
+  createGameController(tipo: string): IAdapter {
     switch(tipo) {
       case 'teclado':
         return new TecladoAdapter(new Teclado())

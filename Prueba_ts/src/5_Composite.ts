@@ -1,35 +1,24 @@
-import { IDevice, TecladoAdapter, JoystickAdapter, Teclado, Joystick } from "./1_Adaptador.js"
-import { IGameController } from "./1_Adaptador.js"
+import { TecladoAdapter, JoystickAdapter, Teclado, Joystick, IGameController, IAdapter } from "./1_Adaptador.js"
 
-export class ControllerAdapterComposite implements IGameController {
-  private controllers: IGameController[] = []
+export class ControllerAdapterComposite implements IAdapter {
+  private controllers: IAdapter[] = []
 
-  addController(controller: IGameController) {
+  addController(controller: IAdapter) {
     this.controllers.push(controller)
   }
 
-  kick(): void {
+  adapt(input: string): string {
+    let action
     this.controllers.forEach((controller) => {
-      controller.kick()
+      if(controller.adapt(input) !== 'no action') {
+        action = controller.adapt(input)
+      }
     })
-  }
-
-  punch(): void {
-    this.controllers.forEach((controller) => {
-      controller.punch()
-    })
-  }
-
-  defend(): void {
-    this.controllers.forEach((controller) => {
-      controller.defend()
-    })
-  }
-
-  special(): void {
-    this.controllers.forEach((controller) => {
-      controller.special()
-    })
+    if(action) {
+      return action
+    } else {
+      return 'no action'
+    }
   }
 }
 
@@ -45,7 +34,7 @@ export class FactoryControllerComposite {
     return FactoryControllerComposite.instance
   }
 
-  createGameController(tipo: string): IGameController {
+  createGameController(tipo: string): IAdapter {
     switch(tipo) {
       case 'teclado':
         return new TecladoAdapter(new Teclado())

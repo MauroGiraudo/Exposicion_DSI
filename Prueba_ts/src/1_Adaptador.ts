@@ -1,87 +1,138 @@
 export interface IDevice {
-    press(input: string): void
+    press(input: string): string
   }
   
   export class Teclado implements IDevice{
     press(tecla: string) {
-      console.log(`Tecla ${tecla} presionada`)
+      //console.log(`Tecla ${tecla} presionada`)
+      return tecla
     }
   }
   
   export class Joystick implements IDevice{
     press(boton: string) {
-      console.log(`Botón ${boton} presionado`)
+      //console.log(`Botón ${boton} presionado`)
+      return boton
     }
   }
-  
-  export interface IGameController {
-    kick(): void
-    punch(): void
-    defend(): void
-    special(): void
+
+  export interface IAdapter {
+    adapt(input: string): string
   }
   
-  export class TecladoAdapter implements IGameController {
+  export class TecladoAdapter implements IAdapter {
+
     private teclado: Teclado
   
     constructor(teclado: Teclado) {
       this.teclado = teclado
     }
   
-    kick() {
-      this.teclado.press('U')
-    }
-  
-    punch() {
-      this.teclado.press('I')
-    }
-  
-    defend() {
-      this.teclado.press('J')
-    }
-  
-    special() {
-      this.teclado.press('K')
+    adapt(tecla: string): string {
+      let result = this.teclado.press(tecla)
+      switch (result) {
+        case 'U': 
+          return 'kick'
+        case 'I':
+          return 'punch'
+        case 'J':
+          return 'defend'
+        case 'K':
+          return 'special'
+        default:
+          return 'no action'
+      }
     }
   }
   
-  export class JoystickAdapter implements IGameController {
+  export class JoystickAdapter implements IAdapter {
     private joystick: Joystick
   
     constructor(joystick: Joystick) {
       this.joystick = joystick
     }
   
-    kick() {
-      this.joystick.press('A')
-    }
-  
-    punch() {
-      this.joystick.press('B')
-    }
-  
-    defend() {
-      this.joystick.press('X')
-    }
-  
-    special() {
-      this.joystick.press('Y')
+    adapt(boton: string): string {
+      let result = this.joystick.press(boton)
+      switch (result) {
+        case 'A': 
+          return 'kick'
+        case 'B':
+          return 'punch'
+        case 'X':
+          return 'defend'
+        case 'Y':
+          return 'special'
+        default:
+          return 'no action'
+      }
     }
   }
 
-export class Game {
-  private controller: IGameController
+  export interface IGameController {
+    kick(): void
+    punch(): void
+    defend(): void
+    special(): void
+  }
 
-  constructor(controller: IGameController){
+export class Game implements IGameController {
+
+  private controller: IAdapter
+
+  constructor(controller: IAdapter) {
     this.controller = controller
   }
 
-  
-
-  play() {
-    this.controller.kick()
-    this.controller.punch()
-    this.controller.defend()
-    this.controller.special()
+  kick(){
+    console.log('Patada')
   }
+
+  punch() {
+    console.log('Puñetazo')
+  }
+
+  defend() {
+    console.log('Defensa')
+  }
+
+  special() {
+    console.log('Ataque Especial')
+  }
+
+  play(input: string) {
+    const command = this.controller.adapt(input)
+    switch (command) {
+      case 'kick':
+        this.kick()
+        break
+      case 'punch':
+        this.punch()
+        break
+      case 'defend':
+        this.defend()
+        break
+      case 'special':
+        this.special()
+        break
+      default:
+        console.log(command)
+        break
+    }
+  }
+ // SIN COMPOSITE
+ 
+  start(input: string) {
+    this.play(input)
+  }
+
+  // CON COMPOSITE 
+  /*
+  start(input: string[]) {
+    input.forEach(action => {
+      this.play(action)
+    })
+  }
+  */
+ // LA IDEA DE ESTE MÉTODO SERÍA UTILIZARLO PARA EL PATRÓN COMPOSITE
 }

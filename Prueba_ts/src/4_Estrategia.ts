@@ -1,28 +1,72 @@
-import {IGameController} from './1_Adaptador.js'
+import {IAdapter, IGameController} from './1_Adaptador.js'
 
 
 // Para implementar el patrón Estrategia, incorporamos el método setController(controller), que cambia el controlador del juego.
-export class GameSingleton{
-    private controller: IGameController;
-    private static instance: GameSingleton;
-    private constructor(controller:IGameController){
-        this.controller = controller;
+export class GameEstrategia implements IGameController {
+  private controller: IAdapter | undefined
+
+  private static instance: GameEstrategia
+
+  private constructor(controller?: IAdapter){
+    this.controller = controller;
+  }
+
+  static createGame(controller?: IAdapter): GameEstrategia {
+    if (!this.instance) {
+      if(controller) {
+        this.instance = new GameEstrategia(controller)
+      } else {
+        this.instance = new GameEstrategia()
+      }
+    } 
+    return this.instance
+      
+  }
+
+  setController(controller: IAdapter) {
+    this.controller = controller;
+  }
+
+  kick() {
+    console.log('Patada')
+  }
+
+  punch() {
+    console.log('Puñetazo')
+  }
+
+  defend() {
+    console.log('Defensa')
+  }
+
+  special() {
+    console.log('Ataque Especial')
+  }
+
+  play(input: string) {
+    if(this.controller) {
+      const command = this.controller.adapt(input)
+      switch (command) {
+      case 'kick':
+        this.kick()
+        break
+      case 'punch':
+        this.punch()
+        break
+      case 'defend':
+        this.defend()
+        break
+      case 'special':
+        this.special()
+        break
+      default:
+        console.log(command)
+        break
     }
-    static createGame(controller: IGameController): GameSingleton {
-        if (!this.instance) {
-            this.instance = new GameSingleton(controller);
-        }
-        return this.instance;
+    } else {
+      throw new Error('No se ha definido un controlador')
     }
-    setController(controller: IGameController){
-        this.controller = controller;
-    }
-    play(){
-        this.controller.kick();
-        this.controller.punch();
-        this.controller.defend();
-        this.controller.special();
-    }
+  }
 }
 
 //Ejemplo de uso

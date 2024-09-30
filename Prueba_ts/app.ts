@@ -1,8 +1,8 @@
-import { Teclado, Joystick, TecladoAdapter, JoystickAdapter, Game } from './src/1_Adaptador copy.js'
-import { FactoryController } from './src/2_Factory copy.js'
-import { FactoryControllerSingleton } from './src/3_Singleton copy.js'
-import { GameEstrategia } from './src/4_Estrategia copy.js'
-import { FactoryControllerComposite } from './src/5_Composite copy.js'
+import { Teclado, Joystick, TecladoAdapter, JoystickAdapter, Game } from './src/1_Adaptador.js'
+import { FactoryController } from './src/2_Factory.js'
+import { FactoryControllerSingleton } from './src/3_Singleton.js'
+import { GameEstrategia } from './src/4_Estrategia.js'
+import { FactoryControllerComposite } from './src/5_Composite.js'
 
 // 1- [NUEVO Patrón Adaptador]
 /*
