@@ -4,7 +4,7 @@ import { FactoryControllerSingleton } from './src/3_Singleton.js'
 import { GameEstrategia } from './src/4_Estrategia.js'
 import { FactoryControllerComposite } from './src/5_Composite.js'
 
-// 1- [NUEVO Patrón Adaptador]
+// 1- [Patrón Adaptador]
 /*
 console.log('\nTeclado')
 
@@ -26,12 +26,12 @@ const joystickAdapter = new JoystickAdapter(joystick)
 
 const game2 = new Game(joystickAdapter)
 
-game2.play('X')
-*/
+game2.play('Y')
 
+*/
 // ----------------------------------------------------------------------------
 
-// 2- [NUEVO Patrón Factoría]
+// 2- [Patrón Factoría]
 /*
 console.log('\nTeclado')
 
@@ -65,7 +65,7 @@ try {
 
 // ----------------------------------------------------------------------------
 
-// 3- [NUEVO Patrón Singleton]
+// 3- [Patrón Singleton]
 /*
 console.log(`\nTeclado`)
 
@@ -94,8 +94,8 @@ try {
 } catch(error: any) {
   console.log(error.message)   
 }
-*/
 
+*/
 // ----------------------------------------------------------------------------
 
 // 4- [Patrón Estrategia]
@@ -122,12 +122,12 @@ try {
 } catch(error: any) {
   console.log(error.message)
 }
-*/
 
+*/
 // ----------------------------------------------------------------------------
 
 // 5- [Patrón Composite]
-/*
+
 console.log(`\nTeclado`)
 
 let tipo = 'teclado'
@@ -137,22 +137,21 @@ try {
   let tecladoController = factory.createGameController(tipo)
   let game = GameEstrategia.createGame()
   game.setController(tecladoController)
-  game.play('A')
+  game.play('U')
 
 
   console.log(`\nJoystick`)
   let joystickController = factory.createGameController('joystick')
   game.setController(joystickController)
-  game.play('U')
+  game.play('X')
 
 
   console.log('\nTeclado y Joystick')
   let tecladoYJoystickController = factory.createGameController('teclado y joystick')
   game.setController(tecladoYJoystickController)
-  game.play('J')
+  game.play('U')
   game.play('X')
 
 } catch(error: any) {
   console.log(error.message)
 }
-*/

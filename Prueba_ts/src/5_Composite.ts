@@ -10,14 +10,15 @@ export class ControllerAdapterComposite implements IAdapter {
   adapt(input: string): string {
     let action
     this.controllers.forEach((controller) => {
-      if(controller.adapt(input) !== 'no action') {
-        action = controller.adapt(input)
+      let input1 = controller.adapt(input)
+      if(input1 !== 'No action') {
+        action = input1
       }
     })
     if(action) {
       return action
     } else {
-      return 'no action'
+      return 'No action'
     }
   }
 }
